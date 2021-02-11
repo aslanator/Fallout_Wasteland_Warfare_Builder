@@ -17,7 +17,7 @@ db.once('open', function() {
 });
 
 // const item = new Item({title: 'Базука', cost: 100, group: 'Guns'});
-
+//
 // item.save(function (err: any, item: IItem) {
 //     if (err) return console.error('Здесь', err);
 //     else {

@@ -1,15 +1,14 @@
 import express from 'express';
-import Item from './database/models/Item';
+import routes from './router/routes';
 require('./database');
 
 const app = express()
-const port = 3002
+const port = 3002;
+
+routes(app);
 
 app.get('/', (_, res) => {
-  Item.find(function (err, items) {
-    if (err) return console.error(err);
-    res.send(items)
-  })
+  res.send('Home');
 })
 
 console.log('listening');
