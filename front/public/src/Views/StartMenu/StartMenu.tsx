@@ -1,11 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from '../../Components/Buttons/Link/Link';
+import './style.scss';
 
 function StartMenu() {
     return (
         <div className="start-menu">
             <Link to="/faction-selection">Create new</Link>
-            <button>Pick from existing</button>
+            <Link to="/select-build">Pick from existing</Link>
         </div>
     );
 }
