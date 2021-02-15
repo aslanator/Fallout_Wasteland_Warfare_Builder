@@ -1,5 +1,6 @@
 import express from 'express';
 import routes from './router/routes';
+import path from 'path';
 require('./database');
 
 const app = express()
@@ -8,7 +9,7 @@ const port = 3002;
 routes(app);
 
 app.get('*', (_, res) => {
-  res.send('Home');
+  res.sendFile(path.join(__dirname+'/../front/public/public/index.html'));
 })
 
 app.get('admin/*', (_, res) => {
