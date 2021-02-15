@@ -7,11 +7,14 @@ const port = 3002;
 
 routes(app);
 
-app.get('/', (_, res) => {
+app.get('*', (_, res) => {
   res.send('Home');
 })
 
-console.log('listening');
+app.get('admin/*', (_, res) => {
+  res.send('admin');
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

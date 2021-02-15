@@ -6,5 +6,5 @@ export default function routes(app: Express) {
     const routesResolver = new RoutesResolver(app);
 
     const itemController = new ItemController();
-    routesResolver.get('/items', itemController.index);
+    routesResolver.get('/api/items', itemController.index);
 }
