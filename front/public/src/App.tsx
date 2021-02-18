@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'
 import store from './Redux/store';
 import './Styles/colors.scss'
 import './Styles/main.scss'
+import Create from './Views/CreateNew/Create/Create';
 
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
                     <Switch>
                         <Route path="/faction-selection">
                             <FactionSelection />
+                        </Route>
+                        <Route path="/create/:faction">
+                            <Create />
                         </Route>
                         <Route path="/">
                             <StartMenu />

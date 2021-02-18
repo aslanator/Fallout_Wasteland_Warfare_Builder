@@ -1,27 +1,27 @@
 import React from 'react';
-import Header from '../../../Components/Header/Header';
-import Button from '../../../Components/Buttons/Button/Button';
+import Header from 'Components/Header/Header';
+import Button from 'Components/Buttons/Button/Button';
 import './style.scss';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectName, set} from './slice'
+import Link from 'Components/Buttons/Link/Link';
+import factions from 'Constants/factions';
 
 function FactionSelection() {
-    const faction = useSelector(selectName);
-    const dispatch = useDispatch();
+    const factionsRender = Array.from(factions.entries()).map(([slug, faction]) =>
+        <li className="faction-selection__list-item" key={slug}>
+            <Link to={`/create/${slug}`}>{faction.title}</Link>
+        </li>
+    );
+
     return (
         <div className="faction-selection">
             <Header>
                 Faction Selection
             </Header>
-            {faction}
-            <ul className="faction-selection__list">
-                <li className="faction-selection__list-item">
-                    <button onClick={() => {dispatch(set('123'))}}>Brotherhood of steel</button>
-                </li>
-                <li className="faction-selection__list-item">
-                    <Button>Creatures</Button>
-                </li>
-            </ul>
+            <div className="faction-selection__content">
+                <ul className="faction-selection__list">
+                    {factionsRender}
+                </ul>
+            </div>
         </div>
     );
 }

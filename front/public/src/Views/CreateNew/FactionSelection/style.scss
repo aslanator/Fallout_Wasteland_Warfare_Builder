@@ -1,6 +1,10 @@
 .faction-selection {
-
+    &__content {
+        display: flex;
+        align-items: center;
+    }
     &__list {
+        padding-left: 20px;
         list-style-type: none;
     }
 
