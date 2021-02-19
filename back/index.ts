@@ -1,10 +1,13 @@
 import express from 'express';
 import routes from './router/routes';
 import path from 'path';
+import cors from 'cors';
 require('./database');
 
 const app = express()
 const port = 3002;
+
+app.use(cors());
 
 routes(app);
 
