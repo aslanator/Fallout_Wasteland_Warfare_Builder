@@ -1,0 +1,10 @@
+.crew-builder {
+
+    overflow: scroll;
+    &__content {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        background: var(--black);
+    }
+}
