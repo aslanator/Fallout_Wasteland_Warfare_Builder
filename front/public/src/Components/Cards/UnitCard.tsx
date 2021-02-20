@@ -11,7 +11,7 @@ type UnitProps = {
 function UnitCard({unit, onDelete = null}: UnitProps) {
     return (
         <div className="unit-card">
-            <img src={`/cards/units/${unit.title.trim()}.png`} alt={`card-${unit.title}`}/>
+            <img src={`/cards/units/${unit.title.trim().toUpperCase()}.jpg`} alt={`card-${unit.title}`}/>
             {onDelete ? <div className="unit-card__delete" onClick={onDelete}><Trash /></div> : ''}
         </div>
     );
