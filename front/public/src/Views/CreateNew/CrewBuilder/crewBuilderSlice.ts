@@ -1,10 +1,11 @@
 import {CaseReducer, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import UnitRequest, {Unit} from 'Requests/UnitRequest';
 import uniqueId from 'lodash/uniqueId';
+import {WithKey} from 'Types/data';
 
 export type CrewBuilderState = {
     units: Unit[],
-    pickedUnits: Record<string, Unit>,
+    pickedUnits: WithKey<Unit>[],
 }
 
 export type CrewBuilderReducers = {
@@ -19,18 +20,18 @@ const slice = createSlice<CrewBuilderState,  CrewBuilderReducers>({
     name: 'crewBuilder',
     initialState: {
         units: [],
-        pickedUnits: {},
+        pickedUnits: [],
     },
     reducers: {
         setUnits(state, action) {
             state.units = action.payload;
         },
         pickACard(state, action) {
-            console.log(action);
-            state.pickedUnits[uniqueId()] = action.payload;
+            const unitWithKey: WithKey<Unit> = {...action.payload, key: uniqueId()} as WithKey<Unit>;
+            state.pickedUnits.push(unitWithKey);
         },
         removeACard(state, action) {
-            delete state.pickedUnits[action.payload];
+            state.pickedUnits = state.pickedUnits.filter(unit => unit.key !== action.payload)
         }
     }
 })
