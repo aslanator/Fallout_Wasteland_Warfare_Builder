@@ -1,17 +1,19 @@
 import {CaseReducer, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import UnitRequest, {Unit} from 'Requests/UnitRequest';
 import uniqueId from 'lodash/uniqueId';
-import {WithKey} from 'Types/data';
+import {Card, createCard} from '../../../Components/Cards/dataCards';
 
 export type CrewBuilderState = {
-    units: Unit[],
-    pickedUnits: WithKey<Unit>[],
+    units: Card<Unit>[],
+    pickedUnits: Card<Unit>[],
 }
 
 export type CrewBuilderReducers = {
     setUnits: CaseReducer<CrewBuilderState, PayloadAction<Unit[]>>
     pickACard: CaseReducer<CrewBuilderState, PayloadAction<Unit>>
+    pickForFree: CaseReducer<CrewBuilderState, PayloadAction<Unit>>
     removeACard: CaseReducer<CrewBuilderState, PayloadAction<string>>
+    moveACard: CaseReducer<CrewBuilderState, PayloadAction<{droppedCardKey: string, droppingPositionKey: string}>>
 }
 
 const request = new UnitRequest();
@@ -24,19 +26,37 @@ const slice = createSlice<CrewBuilderState,  CrewBuilderReducers>({
     },
     reducers: {
         setUnits(state, action) {
-            state.units = action.payload;
+            state.units = action.payload.map(unit => createCard(unit));
         },
         pickACard(state, action) {
-            const unitWithKey: WithKey<Unit> = {...action.payload, key: uniqueId()} as WithKey<Unit>;
-            state.pickedUnits.push(unitWithKey);
+            state.pickedUnits.push(createCard(action.payload));
+        },
+        pickForFree(state, action) {
+            action.payload.cost = 0;
+            state.pickedUnits.push(createCard(action.payload));
         },
         removeACard(state, action) {
             state.pickedUnits = state.pickedUnits.filter(unit => unit.key !== action.payload)
-        }
+        },
+        moveACard(state, action) {
+            const pickedUnits = [...state.pickedUnits];
+            const {droppedCardKey, droppingPositionKey} = action.payload;
+            if(droppedCardKey === droppingPositionKey) {
+                return;
+            }
+            const droppedCardIndex = pickedUnits.findIndex(card => card.key === droppedCardKey);
+            const droppingPositionIndex = pickedUnits.findIndex(card => card.key === droppingPositionKey);
+            if(droppedCardIndex !== -1 && droppingPositionIndex !== -1) {
+                const droppedCard = pickedUnits[droppedCardIndex];
+                pickedUnits.splice(droppedCardIndex, 1);
+                pickedUnits.splice(droppingPositionIndex, 0, droppedCard);
+            }
+            state.pickedUnits = pickedUnits;
+        },
     }
 })
 
-export const { setUnits, pickACard, removeACard } = slice.actions
+export const { setUnits, pickACard, removeACard, moveACard } = slice.actions
 
 
 export const loadUnits = async (dispatch: any) => {

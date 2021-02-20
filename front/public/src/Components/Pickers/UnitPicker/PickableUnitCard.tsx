@@ -1,18 +1,23 @@
 import React from 'react';
 import './style.scss';
 import {Unit} from 'Requests/UnitRequest';
-import {useDispatch} from 'react-redux';
-import {pickACard} from 'Views/CreateNew/CrewBuilder/crewBuilderSlice';
-import UnitCard from '../../Cards/UnitCard';
 
-function PickableUnitCard({unit, close}: { unit: Unit, close: () => void }) {
-    const dispatch = useDispatch();
-    function onPick() {
-        dispatch(pickACard(unit));
-        close();
-    }
+import UnitCard from '../../Cards/UnitCard';
+import {Card} from '../../Cards/dataCards';
+import {crewBuilderOnPick} from 'Views/CreateNew/CrewBuilder/crewBuilder.types';
+
+export type PickableUnitCardProps = {
+    unit: Card<Unit>,
+    close: () => void
+    onPick: crewBuilderOnPick,
+};
+
+function PickableUnitCard({unit, onPick, close}: PickableUnitCardProps) {
     return (
-        <div onClick={onPick}>
+        <div onClick={() => {
+            onPick(unit);
+            close();
+        }}>
             <UnitCard unit={unit} />
         </div>
     );

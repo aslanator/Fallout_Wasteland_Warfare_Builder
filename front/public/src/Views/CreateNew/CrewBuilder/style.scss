@@ -1,6 +1,5 @@
 .crew-builder {
-
-    overflow: scroll;
+    overflow: auto;
     &__content {
         display: flex;
         padding: 20px;

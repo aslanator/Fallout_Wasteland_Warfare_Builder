@@ -1,7 +1,13 @@
 import Request from './Request';
-import {IUnit} from '../../../../back/database/models/Unit';
+import {IUnit, TYPES} from '../../../../back/database/models/Unit';
 
-export type Unit = IUnit;
+export type Unit = {
+    types: TYPES,
+    title: string,
+    cost: number,
+    items: string[],
+    faction: string,
+}
 
 export default class UnitRequest extends Request {
 

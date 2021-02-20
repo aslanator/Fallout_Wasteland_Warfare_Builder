@@ -3,10 +3,19 @@ import './style.scss';
 import {Unit} from 'Requests/UnitRequest'
 import PickableUnitCard from './PickableUnitCard';
 import ReactModal from 'react-modal';
+import {Card} from 'Components/Cards/dataCards';
+import {crewBuilderOnPick} from 'Views/CreateNew/CrewBuilder/crewBuilder.types';
 
-function UnitPicker({isOpen, units, close}: {isOpen: boolean, units: Unit[], close: () => void}) {
+export type UnitPicker = {
+    isOpen: boolean,
+    units: Card<Unit>[],
+    close: () => void,
+    onPick: crewBuilderOnPick,
+};
+
+function UnitPicker({isOpen, units, close, onPick}: UnitPicker) {
     const unitList = units.map(unit =>
-        <PickableUnitCard key={unit.title} unit={unit} close={close} />
+        <PickableUnitCard key={unit.title} unit={unit} close={close} onPick={onPick} />
     )
     return (
         <ReactModal isOpen={isOpen} onRequestClose={close}>

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "back": "nodemon --watch './back/**/*.ts' --ignore './back/**/*.spec.ts' --exec 'ts-node' ./back/index.ts"
+    "back": "nodemon --watch './**/*.ts' --ignore './**/*.spec.ts' --exec 'ts-node' ./index.ts"
   },
   "author": "Aslanator",
   "license": "ISC",

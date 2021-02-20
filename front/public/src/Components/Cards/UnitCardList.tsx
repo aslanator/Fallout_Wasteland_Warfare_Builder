@@ -2,16 +2,19 @@ import React from 'react';
 import './style.scss';
 import {Unit} from 'Requests/UnitRequest'
 import UnitCard from './UnitCard';
-import {WithKey} from '../../Types/data';
+import {Card, onCanDrop} from './dataCards';
+import DraggableUnitCard from './DraggableUnitCard';
 
 type UnitCardListProps = {
-    units: WithKey<Unit>[];
-    onDelete: (key: string) => void
+    units: Card<Unit>[];
+    onDelete: (key: string) => void,
+    onCardDrop?: onCanDrop
 }
 
-function UnitCardList({units, onDelete}: UnitCardListProps) {
+function UnitCardList({units, onDelete, onCardDrop = undefined}: UnitCardListProps) {
     const unitsList = units.map(unit =>
-        <UnitCard key={unit.key} unit={unit} onDelete={() => onDelete(unit.key)} />)
+        onCardDrop ? <DraggableUnitCard onCardDrop={onCardDrop} key={unit.key} unit={unit} onDelete={() => onDelete(unit.key)} />
+            : <UnitCard key={unit.key} unit={unit} onDelete={() => onDelete(unit.key)} />)
     return (
         <ul className="card-list">
             {unitsList}
